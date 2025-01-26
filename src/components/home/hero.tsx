@@ -38,7 +38,7 @@ export function Hero() {
         <div className="flex justify-center gap-4">
           <Link
             href="/about"
-            className="bg-[#F4A442] hover:bg-[#E89432] text-white px-8 py-3 rounded-md font-medium transition-colors"
+            className="bg-[#55d7c6] hover:bg-[#61abcb] text-white px-8 py-3 rounded-md font-medium transition-colors"
           >
             LEARN MORE
           </Link>

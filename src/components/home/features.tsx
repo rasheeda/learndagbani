@@ -7,7 +7,7 @@ function FeatureCard({ title, description }: { title: string; description: strin
     <div className="text-center px-4">
       {/* Checkmark icon */}
       <div className="flex justify-center mb-4">
-        <CheckCircle className="w-12 h-12 text-[#F4A442]" />
+        <CheckCircle className="w-12 h-12 text-[#55d7c6]" />
       </div>
       
       {/* Feature title */}

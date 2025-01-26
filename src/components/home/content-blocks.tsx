@@ -30,7 +30,7 @@ function ContentBlock({
       </p>
       <Link
         href={buttonLink}
-        className="inline-block bg-[#F4A442] hover:bg-[#E89432] text-white px-6 py-2 rounded text-sm font-medium transition-colors"
+        className="inline-block bg-[#55d7c6] hover:bg-[#69a4d2] text-white px-6 py-2 rounded text-sm font-medium transition-colors"
       >
         {buttonText}
       </Link>
@@ -84,7 +84,7 @@ export function ContentBlocks() {
       description: "Explore a draft/unofficial Dagbanli dictionary created by Tony Naden. We are looking for volunteers to help us create an updated dictionary. Learn how you can help by emailing hello@learndagbani.org",
       image: "/images/book-leaf.jpg",
       buttonText: "VIEW UNOFFICIAL DICTIONARY",
-      buttonLink: "/dictionary",
+      buttonLink: "/files/dagbani-dictionary-pdf",
       imageOnLeft: false
     },
     {
@@ -92,7 +92,7 @@ export function ContentBlocks() {
       description: "Learn Dagbanli will not exist without contributors. Help us keep this alive by contributing to the project. All forms of lesson contributions are welcome; text, audio, video, etc. Click below to learn more about how you can contribute to the lessons.",
       image: "/images/male-working-on-computer.jpg",
       buttonText: "LEARN MORE",
-      buttonLink: "/contribute",
+      buttonLink: "/contact-us",
       imageOnLeft: true
     }
   ]

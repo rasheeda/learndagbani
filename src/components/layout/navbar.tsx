@@ -26,7 +26,7 @@ const navItems: NavItem[] = [
     //   { label: 'History of Dagbon', href: '/courses/history-of-dagbon' }
     // ]
   },
-  { label: 'ABOUT US', href: '/about-us' },
+  { label: 'ABOUT US', href: '/about' },
   { label: 'CONTACT US', href: '/contact-us' }
 ]
 
