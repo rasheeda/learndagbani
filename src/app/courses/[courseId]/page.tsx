@@ -3,6 +3,29 @@ import { getCourseContent, getLesson } from '../../../lib/course-utils'
 import { CourseSidebar } from '../../../components/courses/course-sidebar'
 import { LessonContent } from '../../../components/courses/lesson-content'
 import { Loading } from '../../../../components/ui/loading'
+import fs from 'fs/promises'
+import path from 'path'
+
+// This function tells Next.js which courseId values to generate at build time
+export async function generateStaticParams() {
+    // Get the courses directory path
+    const coursesPath = path.join(process.cwd(), 'src/content/courses')
+
+    try {
+        // Read all directory names in the courses folder
+        const courseDirs = await fs.readdir(coursesPath)
+
+        // Transform directory names into params objects
+        return courseDirs.map((courseId) => ({
+            courseId: courseId,
+        }))
+    } catch (error) {
+        console.error('Error reading course directories:', error)
+        // Return at least one course ID to prevent build failure
+        return [{ courseId: 'learn-dagbanli' }]
+    }
+}
+
 
 // Define the page props interface according to Next.js conventions
 interface CoursePageProps {
