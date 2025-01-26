@@ -1,5 +1,3 @@
-
-
 import { Suspense } from 'react'
 import { getCourseContent, getLesson } from '../../../lib/course-utils'
 import { CourseSidebar } from '../../../components/courses/course-sidebar'

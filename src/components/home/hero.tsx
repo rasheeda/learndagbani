@@ -15,20 +15,17 @@ export function Hero() {
           className="object-cover"
           priority
         />
-        {/* Semi-transparent overlay to ensure text readability 
-            We're using a light blue color that matches your design */}
-        {/* <div className="absolute inset-0 bg-[#E5EBEE]/80" /> */}
       </div>
 
       {/* Content positioned over the background */}
       <div className="relative z-10 max-w-4xl mx-auto text-center px-4">
         {/* Main heading */}
-        <h1 className="text-5xl font-bold mb-6 text-gray-900">
+        <h1 className="text-6xl font-bold mb-8 text-gray-900">
           Learn Dagbanli
         </h1>
         
         {/* Subtitle text with improved readability */}
-        <p className="text-xl mb-10 text-gray-700">
+        <p className="text-2xl mb-10 leading-relaxed text-black font-semibold max-w-3xl mx-auto">
           Learn how to speak and write Dagbanli with video and text lessons 
           online for free. Learn Dagbanli is a collective effort by volunteers 
           who want to make the Dagbani language more accessible and available.

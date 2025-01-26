@@ -1,4 +1,3 @@
-// src/components/home/features.tsx
 import { CheckCircle } from 'lucide-react'
 
 // Individual feature card component

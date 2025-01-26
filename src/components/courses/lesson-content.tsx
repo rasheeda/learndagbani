@@ -1,4 +1,3 @@
-// src/components/courses/lesson-content.tsx
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { ArrowLeft, ArrowRight, Link } from 'lucide-react'

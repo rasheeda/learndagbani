@@ -1,9 +1,6 @@
-// src/components/home/content-blocks.tsx
 import Image from 'next/image'
 import Link from 'next/link'
 
-// The ContentBlock component now implements a more grid-like structure
-// that matches your screenshot exactly
 function ContentBlock({
   title,
   description,
@@ -97,8 +94,7 @@ export function ContentBlocks() {
     }
   ]
 
-  // We wrap the blocks in a container that provides consistent spacing
-  // and a light background that matches your screenshot
+  // wrap the blocks in a container that provides consistent spacing
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto">
