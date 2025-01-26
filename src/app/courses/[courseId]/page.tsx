@@ -25,28 +25,80 @@ export async function generateStaticParams() {
         return [{ courseId: 'learn-dagbanli' }]
     }
 
-    /**
-     * or statically
-     * return [
-      { courseId: 'learn-dagbanli' },
-      { courseId: 'dagbon-culture' },
-      { courseId: 'history-of-dagbon' }
-    ]
-     */
+    // return [
+    //   { courseId: 'learn-dagbanli' },
+    //   { courseId: 'dagbon-culture' },
+    //   { courseId: 'history-of-dagbon' }
+    // ]
 }
 
-// Main page component simplified to just handle static params
-export default function CoursePage(props: any) {
-    // We wrap everything in a client component to handle the dynamic content
+// Helper function to calculate total lessons
+function getTotalLessons(courseContent: any) {
+    let total = 0
+    courseContent.units.forEach((unit: any) => {
+        total += unit.lessons.length
+    })
+    return total
+}
+
+// We create a simple wrapper component that handles the static params
+export default function CoursePageWrapper(props: any) {
     return (
         <Suspense fallback={<Loading />}>
-            <CourseContent {...props} />
+            <CoursePage {...props} />
         </Suspense>
     )
 }
 
+// We'll explicitly type this for Next.js static pages
+type PageParams = {
+    params: {
+        courseId: string
+    }
+    searchParams: Record<string, string | string[] | undefined>
+}
+
+// Main page component simplified to just handle static params
+async function CoursePage({
+    params
+}: {
+    params: { courseId: string }
+}) {
+    // We fetch the course content during the static build
+    const courseContent = await getCourseContent(params.courseId)
+
+    // Get the first unit and lesson for initial render
+    const firstUnit = courseContent.units[0]
+    const firstLesson = firstUnit?.lessons[0]
+
+    if (!firstLesson) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <p className="text-gray-600">No lessons found</p>
+            </div>
+        )
+    }
+
+    return (
+        <div className="flex h-screen">
+            <CourseSidebar
+                units={courseContent.units}
+                currentUnitId={firstUnit.id}
+                currentLessonId={firstLesson.id}
+                courseId={params.courseId}
+            />
+            <LessonContent
+                lesson={firstLesson}
+                courseTitle={courseContent.title}
+                totalLessons={getTotalLessons(courseContent)}
+                currentLessonNumber={1}
+            />
+        </div>
+    )
+}
+
 // Separate async component to handle the data fetching and rendering
-async function CourseContent({ params, searchParams }: any) {
+async function CourseContent({ params, searchParams }: PageParams) {
     const courseContent = await getCourseContent(params.courseId)
 
     // Handle search parameters with type safety
