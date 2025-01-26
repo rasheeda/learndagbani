@@ -1,0 +1,53 @@
+name: Deploy to Production
+
+# This workflow will only run on pushes to the main branch
+# This ensures only merged PRs trigger deployments
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Check out the repository code
+      - uses: actions/checkout@v4
+      
+      # Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      # Install dependencies
+      - name: Install dependencies
+        run: npm ci
+      
+      # Build the static site
+      - name: Build site
+        run: npm run build
+        env:
+          # Add any environment variables needed for build
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.SITE_URL }}
+      
+      # Install SSH key
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+      
+      # Deploy to Prod
+      - name: Deploy to server
+        run: |
+          # Sync only the static output files to your server
+          rsync -avz --delete \
+            ./out/ \
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}

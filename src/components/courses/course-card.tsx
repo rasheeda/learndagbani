@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Clock, Users, BookOpen, Award } from 'lucide-react'
+import { BookOpen, Award } from 'lucide-react'
 import type { Course } from '../../types/courses'
 
 export function CourseCard({ course }: { course: Course }) {

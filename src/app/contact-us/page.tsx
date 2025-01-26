@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin } from 'lucide-react'
+import { Phone, Mail, MapPin, LucideIcon } from 'lucide-react'
 
 // Contact card component for better organization
 function ContactCard({
@@ -6,7 +6,7 @@ function ContactCard({
   title,
   content
 }: {
-  icon: any
+  icon: LucideIcon
   title: string
   content: string
 }) {

@@ -31,7 +31,7 @@ export default function AboutPage() {
               <div className="space-y-6">
                 <p className="text-lg text-gray-700">
                   We came together after a twitter and facebook post discussion 
-                  on why there were no resources for learning Dagbani. We're on 
+                  on why there were no resources for learning Dagbani. We&apos;re on 
                   a journey!
                 </p>
                 <p className="text-lg text-gray-700">
