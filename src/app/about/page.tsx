@@ -4,7 +4,7 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20">
+      <section className="container mx-auto px-4 py-20 bg-white">
         <h1 className="text-5xl font-bold text-gray-900">About Us</h1>
       </section>
 

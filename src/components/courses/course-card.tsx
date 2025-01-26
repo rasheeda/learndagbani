@@ -20,7 +20,7 @@ export function CourseCard({ course }: { course: Course }) {
       <div className="p-6">
 
         {/* Title */}
-        <h3 className="text-xl font-bold mb-3">
+        <h3 className="text-xl font-bold mb-3 text-black">
           {course.title}
         </h3>
 

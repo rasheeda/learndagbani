@@ -15,7 +15,7 @@ function ContactCard({
       <div className="w-16 h-16 bg-[#55d7c6] rounded-full flex items-center justify-center mx-auto mb-4">
         <Icon className="w-8 h-8 text-white" />
       </div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <h3 className="text-xl font-semibold mb-2 text-black">{title}</h3>
       <p className="text-gray-600">{content}</p>
     </div>
   )
@@ -43,8 +43,8 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20">
-        <h1 className="text-5xl font-bold text-gray-900">Get in Touch</h1>
+      <section className="container mx-auto px-4 py-20 bg-white">
+        <h1 className="text-5xl font-bold text-black">Get in Touch</h1>
       </section>
 
       {/* Contact Cards Section */}
