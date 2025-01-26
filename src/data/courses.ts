@@ -1,5 +1,3 @@
-// src/data/courses.ts
-
 // First, let's import our Course type to ensure type safety
 import { Course } from '../types/courses'
 
@@ -11,13 +9,13 @@ export const courses: Course[] = [
     description: 'Welcome to the online course for learning how to write and speak Dagbanli/Dagbani. This and all courses on the website are FREE and available for multiple retakes.',
     duration: 10,
     level: 'All Levels',
-    image: '/images/courses/learn-dagbanli.jpg',
+    image: '/images/two-school-boys-smiling.jpg',
     author: 'Mandeeya',
     lessonsCount: 22,
     quizzesCount: 0,
     studentsCount: 70,
     status: 'published',
-    // You can add additional metadata as needed
+    // add additional metadata as needed
     syllabus: [
       'Unit One: Introduction to Dagbanli',
       'Unit Two: Basic Grammar',
@@ -35,7 +33,7 @@ export const courses: Course[] = [
     description: 'This course explores the rich cultural heritage of the Dagbon people. Learn about traditions, customs, and cultural practices that have been passed down through generations.',
     duration: 10,
     level: 'All Levels',
-    image: '/images/courses/dagbon-culture.jpg',
+    image: '/images/damba-dance-11.jpg',
     author: 'Mandeeya',
     lessonsCount: 0,
     quizzesCount: 0,
@@ -59,7 +57,7 @@ export const courses: Course[] = [
     description: 'Dive deep into the fascinating history of Dagbon, from its origins to modern times. This comprehensive course covers key historical events, important figures, and the evolution of Dagbon society.',
     duration: 10,
     level: 'All Levels',
-    image: '/images/courses/history-of-dagbon.jpg',
+    image: '/images/tree-landscape.jpg',
     author: 'Mandeeya',
     lessonsCount: 0,
     quizzesCount: 0,

@@ -19,13 +19,9 @@ export function CourseCard({ course }: { course: Course }) {
 
       {/* Course Content */}
       <div className="p-6">
-        {/* Author */}
-        <div className="text-sm text-gray-600 mb-2">
-          by <span className="text-blue-600">{course.author}</span>
-        </div>
 
         {/* Title */}
-        <h3 className="text-xl font-semibold mb-3">
+        <h3 className="text-xl font-bold mb-3">
           {course.title}
         </h3>
 
@@ -37,20 +33,12 @@ export function CourseCard({ course }: { course: Course }) {
         {/* Course Stats */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div className="flex items-center text-sm text-gray-600">
-            <Clock className="w-4 h-4 mr-2" />
-            {course.duration} Weeks
-          </div>
-          <div className="flex items-center text-sm text-gray-600">
             <Award className="w-4 h-4 mr-2" />
             {course.level}
           </div>
           <div className="flex items-center text-sm text-gray-600">
             <BookOpen className="w-4 h-4 mr-2" />
             {course.lessonsCount} Lessons
-          </div>
-          <div className="flex items-center text-sm text-gray-600">
-            <Users className="w-4 h-4 mr-2" />
-            {course.studentsCount} Students
           </div>
         </div>
 
@@ -59,14 +47,17 @@ export function CourseCard({ course }: { course: Course }) {
           <span className={`text-sm ${
             course.status === 'published' ? 'text-green-600' : 'text-orange-600'
           }`}>
-            {course.status === 'published' ? 'Free' : 'Coming Soon'}
+            {course.status === 'published' ? 'Available (Free)' : 'Coming Soon'}
           </span>
-          <Link
+          {
+            course.status === 'published' ? <Link
             href={`/courses/${course.id}`}
-            className="bg-[#F4A442] hover:bg-[#E89432] text-white px-6 py-2 rounded-md text-sm font-medium transition-colors"
+            className="bg-[#7aac7d] hover:bg-[#E89432] text-white px-6 py-2 rounded-md text-sm font-medium transition-colors"
           >
-            {course.status === 'published' ? 'Read more' : 'Learn more'}
-          </Link>
+            Start Course
+          </Link> : <></>
+          }
+          
         </div>
       </div>
     </div>

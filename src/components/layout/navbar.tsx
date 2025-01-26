@@ -26,8 +26,6 @@ const navItems: NavItem[] = [
     //   { label: 'History of Dagbon', href: '/courses/history-of-dagbon' }
     // ]
   },
-  { label: 'CONTRIBUTE', href: '/contribute' },
-  { label: 'PRIVACY POLICY', href: '/privacy-policy' },
   { label: 'ABOUT US', href: '/about-us' },
   { label: 'CONTACT US', href: '/contact-us' }
 ]
@@ -41,16 +39,15 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
         {/* Logo and site name */}
         <Link href="/" className="flex items-center space-x-3">
-          {/* <Image
-            src="/images/logo.png"
+          <Image
+            src="/images/learn-dagbani-logo.jpeg"
             alt="Learn Dagbani Logo"
-            width={40}
-            height={40}
-            className="w-10 h-10"
-          /> */}
-          <span className="text-xl text-black font-normal">
+            width={150}
+            height={150}
+          />
+          {/* <span className="text-xl text-black font-normal">
             Learn Dagbanli
-          </span>
+          </span> */}
         </Link>
 
         {/* Main navigation */}

@@ -12,7 +12,7 @@ export function Footer() {
             </h3>
             <p className="text-base text-gray-600">
               Learn Dagbanli is a collective effort by volunteers who want to make 
-              the Dagbani language more accessible and available to everyone.
+              the Dagbani language accessible and available to everyone.
             </p>
           </div>
 
@@ -25,16 +25,6 @@ export function Footer() {
               <li>
                 <Link href="/courses" className="text-base text-gray-600 hover:text-gray-900">
                   Courses
-                </Link>
-              </li>
-              <li>
-                <Link href="/contribute" className="text-base text-gray-600 hover:text-gray-900">
-                  Contribute
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-base text-gray-600 hover:text-gray-900">
-                  About Us
                 </Link>
               </li>
             </ul>
@@ -61,7 +51,7 @@ export function Footer() {
         {/* Copyright */}
         <div className="mt-8 pt-8 border-t border-gray-200">
           <p className="text-base text-gray-400 text-center">
-            © {new Date().getFullYear()} Learn Dagbanli. All rights reserved.
+            © {new Date().getFullYear()} Learn Dagbani. All rights reserved.
           </p>
         </div>
       </div>
