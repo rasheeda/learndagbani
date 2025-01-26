@@ -24,60 +24,51 @@ export async function generateStaticParams() {
         // Return at least one course ID to prevent build failure
         return [{ courseId: 'learn-dagbanli' }]
     }
+
+    /**
+     * or statically
+     * return [
+      { courseId: 'learn-dagbanli' },
+      { courseId: 'dagbon-culture' },
+      { courseId: 'history-of-dagbon' }
+    ]
+     */
 }
 
-
-// Define the page props interface according to Next.js conventions
-interface CoursePageProps {
-    params: {
-        courseId: string;
-    };
-    searchParams: {
-        unit?: string;
-        lesson?: string;
-    };
+// Main page component simplified to just handle static params
+export default function CoursePage(props: any) {
+    // We wrap everything in a client component to handle the dynamic content
+    return (
+        <Suspense fallback={<Loading />}>
+            <CourseContent {...props} />
+        </Suspense>
+    )
 }
 
-// Type for adjacent (next/prev) lessons
-interface AdjacentLesson {
-    id: string;
-    title: string;
-    unitId: string;
-}
-
-// Type for course content structure
-interface CourseUnit {
-    id: string;
-    title: string;
-    lessons: Array<{
-        id: string;
-        title: string;
-    }>;
-}
-
-interface CourseContent {
-    units: CourseUnit[];
-    title: string;
-}
-
-// The page component with proper type annotations
-export default async function CoursePage({
-    params,
-    searchParams,
-}: CoursePageProps) {
-    // Load the course content
+// Separate async component to handle the data fetching and rendering
+async function CourseContent({ params, searchParams }: any) {
     const courseContent = await getCourseContent(params.courseId)
 
-    // Determine current unit and lesson using const
-    const currentUnit = searchParams.unit || courseContent.units[0].id
-    const currentLesson = searchParams.lesson || courseContent.units[0]?.lessons[0]?.id;
+    // Handle search parameters with type safety
+    const unit = typeof searchParams?.unit === 'string' ? searchParams.unit : undefined
+    const currentUnit = unit || courseContent.units[0].id
 
-    // Load the lesson content
-    const lesson = currentLesson
+    const lesson = typeof searchParams?.lesson === 'string' ? searchParams.lesson : undefined
+    const currentLesson = lesson || courseContent.units[0]?.lessons[0]?.id
+
+    const lessonContent = currentLesson
         ? await getLesson(params.courseId, currentUnit, currentLesson)
         : null
 
-    // Calculate lesson number and total
+    if (!lessonContent) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <p className="text-gray-600">Lesson not found</p>
+            </div>
+        )
+    }
+
+    // Calculate lesson numbers
     let currentLessonNumber = 0
     let totalLessons = 0
 
@@ -90,14 +81,6 @@ export default async function CoursePage({
         })
     })
 
-    if (!lesson) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <p className="text-gray-600">Lesson not found</p>
-            </div>
-        )
-    }
-
     return (
         <div className="flex h-screen">
             <CourseSidebar
@@ -106,28 +89,21 @@ export default async function CoursePage({
                 currentLessonId={currentLesson}
                 courseId={params.courseId}
             />
-
-            <Suspense fallback={<Loading />}>
-                <LessonContent
-                    lesson={lesson}
-                    courseTitle={courseContent.title}
-                    totalLessons={totalLessons}
-                    currentLessonNumber={currentLessonNumber}
-                    nextLesson={getNextLesson(courseContent, currentUnit, currentLesson)}
-                    prevLesson={getPrevLesson(courseContent, currentUnit, currentLesson)}
-                />
-            </Suspense>
+            <LessonContent
+                lesson={lessonContent}
+                courseTitle={courseContent.title}
+                totalLessons={totalLessons}
+                currentLessonNumber={currentLessonNumber}
+                nextLesson={getNextLesson(courseContent, currentUnit, currentLesson)}
+                prevLesson={getPrevLesson(courseContent, currentUnit, currentLesson)}
+            />
         </div>
     )
 }
 
-// Helper function to find the next lesson
-function getNextLesson(
-    courseContent: CourseContent,
-    currentUnit: string,
-    currentLesson: string
-): AdjacentLesson | undefined {
-    let foundCurrent = false;
+// Helper functions for navigation
+function getNextLesson(courseContent: any, currentUnit: string, currentLesson: string) {
+    let foundCurrent = false
 
     for (const unit of courseContent.units) {
         for (const lesson of unit.lessons) {
@@ -136,35 +112,30 @@ function getNextLesson(
                     id: lesson.id,
                     title: lesson.title,
                     unitId: unit.id
-                };
+                }
             }
             if (lesson.id === currentLesson && unit.id === currentUnit) {
-                foundCurrent = true;
+                foundCurrent = true
             }
         }
     }
-    return undefined; // Return undefined instead of null
+    return undefined
 }
 
-// Helper function to find the previous lesson with proper typing
-function getPrevLesson(
-    courseContent: CourseContent,
-    currentUnit: string,
-    currentLesson: string
-): AdjacentLesson | undefined {
-    let prevLesson: AdjacentLesson | undefined = undefined;
+function getPrevLesson(courseContent: any, currentUnit: string, currentLesson: string) {
+    let prevLesson: any = undefined
 
     for (const unit of courseContent.units) {
         for (const lesson of unit.lessons) {
             if (lesson.id === currentLesson && unit.id === currentUnit) {
-                return prevLesson;
+                return prevLesson
             }
             prevLesson = {
                 id: lesson.id,
                 title: lesson.title,
                 unitId: unit.id
-            };
+            }
         }
     }
-    return undefined;
+    return undefined
 }
