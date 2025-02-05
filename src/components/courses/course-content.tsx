@@ -51,8 +51,14 @@ export function CourseContent({
         {currentLesson && (
           <LessonContent
             lesson={currentLesson}
-            courseTitle={courseData.title}
-          />
+            courseTitle={courseData.title} courseId={''} 
+            isLessonComplete={function (lessonId: string): boolean {
+              throw new Error('Function not implemented.')
+            } } markLessonComplete={function (lessonId: string): void {
+              throw new Error('Function not implemented.')
+            } } markLessonIncomplete={function (lessonId: string): void {
+              throw new Error('Function not implemented.')
+            } }          />
         )}
       </div>
     </div>

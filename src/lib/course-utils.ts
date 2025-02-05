@@ -50,7 +50,7 @@ export async function getCourseContent(courseId: string) {
           id: unitDir,
           title: unitData.title,
           order: unitData.order,
-          lessons: lessons.sort((a, b) => 
+          lessons: lessons.sort((a: any, b: any) => 
             (a.order || 0) - (b.order || 0)
           )
         }
