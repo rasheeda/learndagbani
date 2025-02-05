@@ -34,7 +34,7 @@ export async function generateStaticParams() {
 export default async function CoursePage({
     params
 }: {
-    params: { courseId: string }
+    params: any
 }) {
     const courseContent = await getCourseContent(params.courseId)
 
