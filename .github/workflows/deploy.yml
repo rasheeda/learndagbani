@@ -29,6 +29,10 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: npm ci
+
+      # Clean up old build files
+      - name: Clean build directory
+        run: rm -rf ./out/
       
       # Build the static site
       - name: Build site

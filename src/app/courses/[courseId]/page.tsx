@@ -14,23 +14,24 @@ export async function generateStaticParams() {
 }
 
 
-export default function CoursePage({
+export default async function CoursePage({
     params
-}: {
-    params: { courseId: string }
-}) {
+  }: {
+    params: any
+  }) {
     const courseContent = getCourseContent(params.courseId)
-
+    
     if (!courseContent) {
-        notFound()
+      notFound()
     }
-
+  
     return (
-        <Suspense fallback={<Loading />}>
-            <CourseContent
-                courseData={courseContent}
-                courseId={params.courseId}
-            />
-        </Suspense>
+      <Suspense fallback={<Loading />}>
+        <CourseContent 
+          courseData={courseContent} 
+          courseId={params.courseId}
+        />
+      </Suspense>
     )
-}
+  }
+  
