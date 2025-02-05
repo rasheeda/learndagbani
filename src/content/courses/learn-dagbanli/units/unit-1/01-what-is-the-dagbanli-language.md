@@ -1,9 +1,9 @@
 ---
-title: Introduction to Dagbanli
-duration: 10
+title: What Is The Dagbanli Language?
+duration: 3
 order: 1
 status: published
-lastUpdated: 2024-01-26
+lastUpdated: 2020-09-14
 ---
 
 Dagbanli is a language spoken by the Dagombas, primarily located in Ghana. The Dagbambas (or Dagombas in literature) are one of the most widespread and numerous peoples of Northern Ghana. They have two principal centres, Tamale and Yendi, centred in the Northern territories.

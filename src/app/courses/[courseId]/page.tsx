@@ -1,7 +1,6 @@
 import { Suspense } from 'react'
-import { getCourseContent, getLesson } from '../../../lib/course-utils'
-import { CourseSidebar } from '../../../components/courses/course-sidebar'
-import { LessonContent } from '../../../components/courses/lesson-content'
+import { getCourseContent } from '../../../lib/course-utils'
+import { CourseContent } from '../../../components/courses/course-content'
 import { Loading } from '../../../../components/ui/loading'
 import fs from 'fs/promises'
 import path from 'path'
@@ -32,162 +31,19 @@ export async function generateStaticParams() {
     // ]
 }
 
-// Helper function to calculate total lessons
-function getTotalLessons(courseContent: any) {
-    let total = 0
-    courseContent.units.forEach((unit: any) => {
-        total += unit.lessons.length
-    })
-    return total
-}
-
-// We create a simple wrapper component that handles the static params
-export default function CoursePageWrapper(props: any) {
-    return (
-        <Suspense fallback={<Loading />}>
-            <CoursePage {...props} />
-        </Suspense>
-    )
-}
-
-// We'll explicitly type this for Next.js static pages
-type PageParams = {
-    params: {
-        courseId: string
-    }
-    searchParams: Record<string, string | string[] | undefined>
-}
-
-// Main page component simplified to just handle static params
-async function CoursePage({
+export default async function CoursePage({
     params
 }: {
     params: { courseId: string }
 }) {
-    // We fetch the course content during the static build
     const courseContent = await getCourseContent(params.courseId)
 
-    // Get the first unit and lesson for initial render
-    const firstUnit = courseContent.units[0]
-    const firstLesson = firstUnit?.lessons[0]
-
-    if (!firstLesson) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <p className="text-gray-600">No lessons found</p>
-            </div>
-        )
-    }
-
     return (
-        <div className="flex h-screen">
-            <CourseSidebar
-                units={courseContent.units}
-                currentUnitId={firstUnit.id}
-                currentLessonId={firstLesson.id}
+        <Suspense fallback={<Loading />}>
+            <CourseContent
+                courseData={courseContent}
                 courseId={params.courseId}
             />
-            <LessonContent
-                lesson={firstLesson}
-                courseTitle={courseContent.title}
-                totalLessons={getTotalLessons(courseContent)}
-                currentLessonNumber={1}
-            />
-        </div>
+        </Suspense>
     )
-}
-
-// Separate async component to handle the data fetching and rendering
-async function CourseContent({ params, searchParams }: PageParams) {
-    const courseContent = await getCourseContent(params.courseId)
-
-    // Handle search parameters with type safety
-    const unit = typeof searchParams?.unit === 'string' ? searchParams.unit : undefined
-    const currentUnit = unit || courseContent.units[0].id
-
-    const lesson = typeof searchParams?.lesson === 'string' ? searchParams.lesson : undefined
-    const currentLesson = lesson || courseContent.units[0]?.lessons[0]?.id
-
-    const lessonContent = currentLesson
-        ? await getLesson(params.courseId, currentUnit, currentLesson)
-        : null
-
-    if (!lessonContent) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <p className="text-gray-600">Lesson not found</p>
-            </div>
-        )
-    }
-
-    // Calculate lesson numbers
-    let currentLessonNumber = 0
-    let totalLessons = 0
-
-    courseContent.units.forEach(unit => {
-        unit.lessons.forEach(l => {
-            totalLessons++
-            if (l.id === currentLesson) {
-                currentLessonNumber = totalLessons
-            }
-        })
-    })
-
-    return (
-        <div className="flex h-screen">
-            <CourseSidebar
-                units={courseContent.units}
-                currentUnitId={currentUnit}
-                currentLessonId={currentLesson}
-                courseId={params.courseId}
-            />
-            <LessonContent
-                lesson={lessonContent}
-                courseTitle={courseContent.title}
-                totalLessons={totalLessons}
-                currentLessonNumber={currentLessonNumber}
-                nextLesson={getNextLesson(courseContent, currentUnit, currentLesson)}
-                prevLesson={getPrevLesson(courseContent, currentUnit, currentLesson)}
-            />
-        </div>
-    )
-}
-
-// Helper functions for navigation
-function getNextLesson(courseContent: any, currentUnit: string, currentLesson: string) {
-    let foundCurrent = false
-
-    for (const unit of courseContent.units) {
-        for (const lesson of unit.lessons) {
-            if (foundCurrent) {
-                return {
-                    id: lesson.id,
-                    title: lesson.title,
-                    unitId: unit.id
-                }
-            }
-            if (lesson.id === currentLesson && unit.id === currentUnit) {
-                foundCurrent = true
-            }
-        }
-    }
-    return undefined
-}
-
-function getPrevLesson(courseContent: any, currentUnit: string, currentLesson: string) {
-    let prevLesson: any = undefined
-
-    for (const unit of courseContent.units) {
-        for (const lesson of unit.lessons) {
-            if (lesson.id === currentLesson && unit.id === currentUnit) {
-                return prevLesson
-            }
-            prevLesson = {
-                id: lesson.id,
-                title: lesson.title,
-                unitId: unit.id
-            }
-        }
-    }
-    return undefined
 }
