@@ -40,14 +40,14 @@ export function CourseContent({
   const currentLesson = currentUnit?.lessons.find(l => l.id === currentLessonId)
 
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-0"> {/* min-h-0 is important for nested flex containers */}
       <CourseSidebar
         units={courseData.units}
         currentUnitId={currentUnitId}
         currentLessonId={currentLessonId}
         courseId={courseId}
       />
-      <div className="flex-1">
+      <div className="flex-1 overflow-hidden">
         {currentLesson && (
           <LessonContent
             lesson={currentLesson}
