@@ -8,7 +8,7 @@ lastUpdated: 2020-09-14
 
 The ability of one to read, view, write, speak and listen to Dagbani language begins with the understanding of the letters of the Dagbani alphabets and their sounds.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/gksKkj6xrKc?si=HuIIzjlYfBikTN0c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![Dagban Bachi (Dagbanli Alphabets)](http://img.youtube.com/vi/gksKkj6xrKc/0.jpg)](http://www.youtube.com/watch?v=gksKkj6xrKc "Dagban Bachi (Dagbanli Alphabets)")
 
 ## Dagbani Bachi Koba (Dagbani Alphabets)
 
