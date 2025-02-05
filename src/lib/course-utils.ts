@@ -1,61 +1,48 @@
+import fs from 'fs'
 import path from 'path'
-import fs from 'fs/promises'
 import matter from 'gray-matter'
 
-export async function getCourseContent(courseId: string) {
+interface Lesson {
+  id: string
+  title: string
+  content: string
+  order: number
+}
+
+export function getCourseContent(courseId: string) {
   try {
     const coursePath = path.join(process.cwd(), 'src/content/courses', courseId)
-    
-    // Read course metadata
-    const courseData = JSON.parse(
-      await fs.readFile(path.join(coursePath, 'course.json'), 'utf8')
-    )
+    const courseData = JSON.parse(fs.readFileSync(path.join(coursePath, 'course.json'), 'utf8'))
 
-    // Read units
     const unitsPath = path.join(coursePath, 'units')
-    const unitDirs = await fs.readdir(unitsPath)
+    const unitDirs = fs.readdirSync(unitsPath)
 
-    // Load each unit and its lessons
-    const units = await Promise.all(
-      unitDirs.map(async (unitDir) => {
-        const unitPath = path.join(unitsPath, unitDir)
+    const units = unitDirs.map(unitDir => {
+      const unitPath = path.join(unitsPath, unitDir)
+      const unitData = JSON.parse(fs.readFileSync(path.join(unitPath, 'unit.json'), 'utf8'))
+
+      const files = fs.readdirSync(unitPath)
+      const lessonFiles = files.filter(file => file.endsWith('.md'))
+
+      const lessons = lessonFiles.map(file => {
+        const content = fs.readFileSync(path.join(unitPath, file), 'utf8')
+        const { data, content: lessonContent } = matter(content)
         
-        // Read unit metadata
-        const unitData = JSON.parse(
-          await fs.readFile(path.join(unitPath, 'unit.json'), 'utf8')
-        )
-
-        // Read lesson files
-        const files = await fs.readdir(unitPath)
-        const lessonFiles = files.filter(file => file.endsWith('.md'))
-
-        // Load each lesson
-        const lessons = await Promise.all(
-          lessonFiles.map(async (file) => {
-            const content = await fs.readFile(
-              path.join(unitPath, file), 
-              'utf8'
-            )
-            const { data, content: lessonContent } = matter(content)
-            
-            return {
-              id: path.basename(file, '.md'),
-              title: data.title,
-              content: lessonContent
-            }
-          })
-        )
-
         return {
-          id: unitDir,
-          title: unitData.title,
-          order: unitData.order,
-          lessons: lessons.sort((a: any, b: any) => 
-            (a.order || 0) - (b.order || 0)
-          )
-        }
+          id: path.basename(file, '.md'),
+          title: data.title,
+          content: lessonContent,
+          order: data.order || 0  // Default to 0 if order is not specified
+        } as Lesson
       })
-    )
+
+      return {
+        id: unitDir,
+        title: unitData.title,
+        order: unitData.order,
+        lessons: lessons.sort((a, b) => a.order - b.order)
+      }
+    })
 
     return {
       ...courseData,
@@ -63,6 +50,6 @@ export async function getCourseContent(courseId: string) {
     }
   } catch (error) {
     console.error('Error loading course:', error)
-    throw error
+    return null
   }
 }
