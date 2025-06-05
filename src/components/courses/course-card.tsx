@@ -17,6 +17,7 @@ export function CourseCard({ course }: { course: Course }) {
       </div>
 
       {/* Course Content */}
+      
       <div className="p-6">
 
         {/* Title */}
